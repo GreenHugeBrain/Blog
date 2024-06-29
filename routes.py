@@ -4,7 +4,6 @@ from os import path
 from ext import app, db
 from models import User, Blog
 from flask_login import login_user, current_user, login_required, logout_user
-from werkzeug.security import generate_password_hash, check_password_hash
 
 
 @app.route("/")
@@ -43,21 +42,10 @@ def blog():
 def signup():
     form = RegisterForm()
     if form.validate_on_submit():
-        # Hash the password before storing it
-        hashed_password = generate_password_hash(form.password.data)
-        
-        new_user = User(
-            name=form.name.data,
-            surname=form.surname.data,
-            email=form.email.data,
-            password=hashed_password  # Store hashed password
-        )
-        
+        new_user = User(name=form.name.data, surname=form.surname.data, email=form.email.data, password=form.password.data)    
         db.session.add(new_user)
         db.session.commit()
-        
         return redirect('/')
-    
     return render_template("signup.html", form=form)
 
 @app.route("/login", methods=['POST', 'GET'])
