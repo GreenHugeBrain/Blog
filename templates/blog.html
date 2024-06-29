@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="addblog">
+  <h3 class="addpost">დაამატეთ პოსტი</h3>
+  <form method="post" enctype="multipart/form-data">
+      {{ form.hidden_tag() }}
+      {{ form.title(class="form-title", placeholder=form.title.label.text) }}
+      {{ form.desc(class="form-textarea", placeholder="დაწერეთ თქვენი პოსტის შინაარსი აქ...") }}      <div class="file-upload">
+          <label for="img-upload" class="file-upload-label">
+              ატვირთეთ ფაილი
+          </label>
+          {{ form.img(id="img-upload", class="file-upload-input", accept="image/*", onchange="updateFileLabel(this)") }}
+      </div>
+      {{ form.Submit(class="form-button") }}
+  </form>
+</div>
+{% endblock %}
